@@ -1,0 +1,28 @@
+name: Integration
+on: 
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby and install gems
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Create DB
+        run: |
+          bundle exec rake db:prepare
+      
+      - name: Run Tests
+        env:
+          DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
+        run: |
+          echo $DEVISE_JWT_SECRET_KEY
+          bundle exec rspec spec
