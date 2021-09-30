@@ -1,0 +1,12 @@
+
+defaults: &default
+  DEVISE_JWT_SECRET_KEY: 7ef398dd98bd08ba99dda72e6dae36f69c55a235c511844f4d9ae3bfc145c06423d19c3bd0a932c33523496fedb3dac6918ae961868b15bcb8b3e67703b32e46
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
