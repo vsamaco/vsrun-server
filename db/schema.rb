@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_09_29_224505) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "activities", force: :cascade do |t|
     t.string "external_id", null: false
     t.string "name"
@@ -32,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_224505) do
     t.string "end_latlong"
     t.string "external_gear_id"
     t.string "external_athlete_id"
-    t.integer "athlete_id"
+    t.bigint "athlete_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["athlete_id"], name: "index_activities_on_athlete_id"
@@ -44,8 +47,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_224505) do
     t.string "last_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "athlete_id"
-    t.index ["athlete_id"], name: "index_athletes_on_athlete_id"
+    t.index ["external_id"], name: "index_athletes_on_external_id", unique: true
   end
 
   create_table "jwt_denylist", force: :cascade do |t|
@@ -60,11 +62,9 @@ ActiveRecord::Schema.define(version: 2021_09_29_224505) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.index "\"external_id\"", name: "index_users_on_external_id", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "activities", "athletes"
-  add_foreign_key "athletes", "athletes"
 end
