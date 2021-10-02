@@ -8,6 +8,6 @@ class CreateAthletes < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index :users, :external_id,                unique: true
+    add_index :athletes, :external_id,                unique: true
   end
 end

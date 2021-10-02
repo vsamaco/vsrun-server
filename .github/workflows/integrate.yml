@@ -7,6 +7,17 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: vsrun_test
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -16,13 +27,26 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: Create DB
+      - name: Install postgres client
         run: |
+          sudo apt-get -yqq install libpq-dev
+
+      - name: Create DB
+        env:
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        run: |
+          cp config/database.yml.ci config/database.yml
           bundle exec rake db:prepare
       
       - name: Run Tests
         env:
           DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
+          RAILS_ENV: test
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         run: |
-          echo $DEVISE_JWT_SECRET_KEY
           bundle exec rspec spec
