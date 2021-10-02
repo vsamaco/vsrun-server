@@ -1,8 +1,7 @@
-name: Integration
-on: 
+name: Deploy
+on:
   push:
-    branches-ignore:
-      - main
+    branches: [main]
 
 jobs:
   test:
@@ -50,4 +49,18 @@ jobs:
           POSTGRES_PASSWORD: postgres
         run: |
           RAILS_ENV=$RAILS_ENV bundle exec rspec spec
-          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to heroku 
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}

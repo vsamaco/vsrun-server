@@ -24,4 +24,4 @@ test:
 
 production:
   <<: *default
-  database: vsrun_production
+  url: <%= ENV["DATABASE_URL"] %>
