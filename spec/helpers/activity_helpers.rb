@@ -24,7 +24,7 @@ module ActivityHelpers
       athlete = build_athlete
 
       FactoryBot.build(:activity, 
-            external_id: Faker::String.random(length: 6), 
+            external_id: Faker::Lorem.characters(number: 10), 
             name: Faker::Lorem::sentence(word_count: 3),
             activity_type: 'Run',
             start_date: DateTime.now,
@@ -32,8 +32,8 @@ module ActivityHelpers
             moving_time: Faker::Number.between(from: 100.0, to: 1000.0),
             elapsed_time: Faker::Number.between(from: 100.0, to: 1000.0),
             total_elevation_gain: Faker::Number.between(from: 100.0, to: 500.0),
-            external_gear_id: Faker::String.random(length: 6),
-            external_athlete_id: Faker::String.random(length: 6),
+            external_gear_id: Faker::Lorem.characters(number: 10),
+            external_athlete_id: Faker::Lorem.characters(number: 10),
             athlete: athlete
         )
   end

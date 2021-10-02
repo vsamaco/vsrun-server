@@ -1,6 +1,6 @@
 
 defaults: &default
-  DEVISE_JWT_SECRET_KEY: <%= ENV["DEVISE_JWT_SECRET_KEY"] %>
+  DEVISE_JWT_SECRET_KEY: DEVISE_JWT_SECRET_KEY
 
 development:
   <<: *default
