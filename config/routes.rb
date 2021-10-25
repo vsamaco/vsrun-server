@@ -22,4 +22,6 @@ Rails.application.routes.draw do
       sessions: 'sessions',
       registrations: 'registrations'
     }
+
+    get '/current_user', to: 'current_user#index'
 end
