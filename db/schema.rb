@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2021_09_29_224505) do
     t.string "external_id", null: false
     t.string "first_name"
     t.string "last_name"
+    t.json "shoes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["external_id"], name: "index_athletes_on_external_id", unique: true
