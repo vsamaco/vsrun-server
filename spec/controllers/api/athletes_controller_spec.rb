@@ -19,7 +19,12 @@ describe Api::AthletesController, type: :request do
 
     it 'returns the user' do
       expect(json['data']).to have_id(athlete.id.to_s)
-      expect(json['data']).to have_type('athletes')
+      expect(json['data']).to have_type('athlete')
+    end
+
+    it 'returns relationships' do
+      expect(json['data']['relationships']).to_not be_empty
+      expect(json['data']['relationships']['activities']).to_not be_empty
     end
   end
 
