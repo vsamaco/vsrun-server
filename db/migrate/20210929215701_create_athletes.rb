@@ -4,6 +4,7 @@ class CreateAthletes < ActiveRecord::Migration[6.1]
       t.string :external_id, null: false
       t.string :first_name
       t.string :last_name
+      t.json   :shoes
 
       t.timestamps
     end

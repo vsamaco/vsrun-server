@@ -20,7 +20,7 @@ module ActivityHelpers
         )
   end
 
-    def build_athlete(athlete)
+    def build_activity
       athlete = build_athlete
 
       FactoryBot.build(:activity, 

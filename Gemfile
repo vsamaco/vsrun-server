@@ -15,6 +15,8 @@ gem 'devise-jwt', '~> 0.9.0'
 
 gem 'jsonapi-rails', '~> 0.4.0'
 
+gem 'strava-ruby-client', '~> 0.4.2'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -36,6 +38,8 @@ group :test do
   gem 'factory_bot_rails', '~> 6.2.0'
   gem 'faker', '~> 2.19.0'
   gem 'jsonapi-rspec', '~> 0.0.11'
+  gem 'webmock', '~> 3.14.0'
+  gem 'rspec-json_expectations', '~> 2.2.0'
 end
 
 group :development, :test do

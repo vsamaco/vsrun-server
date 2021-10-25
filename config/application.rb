@@ -22,6 +22,7 @@ Bundler.require(*Rails.groups)
 module VsrunServer
   class Application < Rails::Application
     config.devise = config_for(:devise)
+    config.my_strava = config_for(:my_strava)
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1

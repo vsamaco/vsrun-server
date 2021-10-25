@@ -1,0 +1,13 @@
+
+defaults: &default
+  access_token: <%= ENV['STRAVA_ACCESS_TOKEN'] %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  
