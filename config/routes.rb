@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :users, only: %w[show]
     resources :athletes, only: %w[show] do
-      resources :activities, only: %[index]
+      resources :activities, only: %w[index]
     end
     resources :activities, only: %w[show index]
   end
