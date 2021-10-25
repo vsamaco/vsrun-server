@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Api::ActivitiesController, type: :request do
 
   let (:user) { create_user }
-  let (:athlete) { create_athlete }
-  let (:activity) { create_activity }
+  let (:athlete) { create_athlete(user) }
+  let (:activity) { create_activity(athlete) }
 
   context 'When fetching an activity' do
     before do

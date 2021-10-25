@@ -18,7 +18,7 @@ describe Api::UsersController, type: :request do
 
     it 'returns the user' do
       expect(json['data']).to have_id(user.id.to_s)
-      expect(json['data']).to have_type('users')
+      expect(json['data']).to have_type('user')
     end
   end
 
