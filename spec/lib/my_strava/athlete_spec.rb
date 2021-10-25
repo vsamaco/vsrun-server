@@ -6,7 +6,8 @@ describe MyStrava::Athlete do
 
   describe '.import' do
     subject { MyStrava::Athlete }
-    let(:athlete) { build_athlete }
+    let(:user) { create_user }
+    let(:athlete) { build_athlete(user) }
 
     before do
       stub_const("MyStrava::Athlete::CACHE_FILE", 'test_athlete_cache.json')
@@ -30,7 +31,7 @@ describe MyStrava::Athlete do
     end
 
     context 'When no cache and config.run = true' do
-      let(:config) {{ run: true }}
+      let(:config) {{ user_id: user.id, run: true }}
 
       it 'calls strava api' do
         result = subject.import(config)
@@ -49,7 +50,7 @@ describe MyStrava::Athlete do
     end
 
     context 'When no cache and config.run = false' do
-      let(:config) {{ run: false }}
+      let(:config) {{ user_id: user.id, run: false }}
 
       it 'does not persist athlete' do
         result = subject.import(config)
@@ -58,7 +59,7 @@ describe MyStrava::Athlete do
     end
 
     context 'When cache exists and config.run = false' do
-      let(:config) {{ run: false }}
+      let(:config) {{ user_id: user.id, run: false }}
       let(:athlete_json) {{
         id: athlete.external_id,
         firstname: athlete.first_name,

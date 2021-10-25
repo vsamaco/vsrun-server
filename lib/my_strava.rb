@@ -32,10 +32,12 @@ module MyStrava
     CACHE_FILE = 'athlete_cache.json'
 
     def self.import(params)
+      user_id = params[:user_id]
       run = params[:run]
       strava_athlete = read_athlete
 
-      athlete = ::Athlete.find_or_initialize_by(external_id: strava_athlete.id)
+      user = User.find(user_id)
+      athlete = ::Athlete.find_or_initialize_by(external_id: strava_athlete.id, user: user)
       athlete.assign_attributes(initialize_athlete(strava_athlete))
       action = athlete.id ? 'Updated' : 'Created'
 
@@ -93,10 +95,10 @@ module MyStrava
       activities = params[:activities] || []
       return if activities.empty?
     
-      athlete_id = activities.first.athlete.id
       run = params[:run]
+      user_id = params[:user_id]
 
-      athlete = ::Athlete.find_by(external_id: athlete_id)
+      athlete = ::Athlete.find_by(user_id: user_id)
       activities.each do |external_activity|
         activity = ::Activity.find_or_initialize_by(external_id: external_activity.id)
         activity.assign_attributes(initialize_activity(athlete, external_activity))

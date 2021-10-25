@@ -2,11 +2,12 @@ require 'my_strava'
 
 namespace :strava do
   desc 'Import athlete'
-  task :import_athlete, [:run] => :environment do |_t, args|
+  task :import_athlete, [:user_id, :run] => :environment do |_t, args|
     Rails.logger = Logger.new(STDOUT)
 
     args.with_defaults(:run => false)
     options = {
+      user_id: args[:user_id],
       run: ActiveRecord::Type::Boolean.new.cast(args[:run])
     }
     Rails.logger.debug "=== Import Athlete #{options} ==="
@@ -30,10 +31,11 @@ namespace :strava do
   end
 
   desc 'Import activities'
-  task :import_activities, [:activity_ids, :run] => :environment do |_t, args|
+  task :import_activities, [:user_id, :activity_ids, :run] => :environment do |_t, args|
     Rails.logger = Logger.new(STDOUT)
     args.with_defaults(:activity_ids => '', :run => false)
     options = {
+      user_id: args[:user_id],
       activity_ids: args[:activity_ids].split(' '),
       run: ActiveRecord::Type::Boolean.new.cast(args[:run])
     }

@@ -5,7 +5,9 @@ describe MyStrava::Activity do
   WebMock.disable_net_connect!
 
   subject { MyStrava::Activity }
-  let(:activity) { build_activity }
+  let(:user) { create_user }
+  let(:athlete) { create_athlete(user) }
+  let(:activity) { build_activity(athlete) }
 
   before do
     stub_const("MyStrava::Activity::CACHE_FILE", 'test_athlete_cache.json')
@@ -32,7 +34,7 @@ describe MyStrava::Activity do
 
   describe '.fetch_new_activities' do
     context 'when no cache' do
-      let(:config) {{run: false}}
+      let(:config) {{user_id: user.id, run: false}}
       it 'calls strava api' do
         result = subject.fetch_new_activities(config)
         expect(@stub).to have_been_requested
@@ -40,7 +42,7 @@ describe MyStrava::Activity do
     end
 
     context 'when cache exists' do
-      let(:config) {{run: false}}
+      let(:config) {{user_id: user.id, run: false}}
       let(:activity_json) {[{
         id: activity.external_id,
         name: activity.name,
@@ -61,12 +63,10 @@ describe MyStrava::Activity do
   describe '.import_activities' do
     context 'when config.run = true' do
       before do
-        @activities = subject.fetch_new_activities({run: false})
-        athlete = activity.athlete
-        athlete.save
+        @activities = subject.fetch_new_activities({user: user.id, run: false})
       end
 
-      let(:config) {{activities: @activities, run: true}}
+      let(:config) {{user_id: user.id, activities: @activities, run: true}}
 
       it 'persists activity to database' do
         result = subject.import_activities(config)

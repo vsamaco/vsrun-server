@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Api::AthletesController, type: :request do
 
   let (:user) { create_user }
-  let (:athlete) { create_athlete }
+  let (:athlete) { create_athlete(user) }
 
   context 'When fetching a athlete' do
     before do

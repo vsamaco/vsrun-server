@@ -2,9 +2,7 @@ require 'faker'
 require 'factory_bot_rails'
 
 module ActivityHelpers
-  def create_activity
-    athlete = create_athlete
-
+  def create_activity(athlete)
     FactoryBot.create(:activity, 
             external_id: Faker::String.random(length: 6), 
             name: Faker::Lorem::sentence(word_count: 3),
@@ -20,9 +18,7 @@ module ActivityHelpers
         )
   end
 
-    def build_activity
-      athlete = build_athlete
-
+    def build_activity(athlete)
       FactoryBot.build(:activity, 
             external_id: Faker::Lorem.characters(number: 10), 
             name: Faker::Lorem::sentence(word_count: 3),
