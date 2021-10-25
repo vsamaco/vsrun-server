@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :users, only: %w[show]
-    resources :athletes, only: %w[show]
-    resources :activities, only: %w[show]
+    resources :athletes, only: %w[show] do
+      resources :activities, only: %[index]
+    end
+    resources :activities, only: %w[show index]
   end
 
   devise_for :users,

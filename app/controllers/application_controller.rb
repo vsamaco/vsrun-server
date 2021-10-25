@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   
   def render_jsonapi_response(resource)
-    if resource.errors.empty?
+    if resource.is_a?(Array) || resource.errors.empty?
       render jsonapi: resource
     else
       render jsonapi_errors: resource.errors, status: 400

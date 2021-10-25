@@ -20,7 +20,7 @@ describe Api::ActivitiesController, type: :request do
 
     it 'returns the activity' do
       expect(json['data']).to have_id(activity.id.to_s)
-      expect(json['data']).to have_type('activities')
+      expect(json['data']).to have_type('activity')
     end
   end
 
@@ -44,6 +44,29 @@ describe Api::ActivitiesController, type: :request do
 
     it 'returns 401' do
       expect(response.status).to eq(401)
+    end
+  end
+
+  context 'When fetching activities for athlete' do
+    before do
+      login_with_api(user)
+      athlete_id = activity.athlete_id
+      get "/api/athletes/#{athlete_id}/activities", headers: {
+        'Authorization': response.headers['Authorization']
+      }
+    end
+
+    it 'returns 200' do
+      expect(response.status).to eq(200)
+    end
+
+    it 'returns array of activities' do
+      expect(json['data']).to be_a(Array)
+    end
+
+    it 'returns relationships' do
+      expect(json['data'].first['relationships']).to_not be_empty
+      expect(json['data'].first['relationships']['athlete']).to_not be_empty
     end
   end
 end
