@@ -20,6 +20,10 @@ describe Api::UsersController, type: :request do
       expect(json['data']).to have_id(user.id.to_s)
       expect(json['data']).to have_type('user')
     end
+
+    it 'returns empty athlete_id' do
+      expect(json['data']['athlete_id']).to be_nil
+    end
   end
 
   context 'When a user is missing' do
